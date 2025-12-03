@@ -1,0 +1,108 @@
+# SSDF Configuration for NIST SP 800-218 Compliance
+# This file configures which SSDF practices are enabled and how they're enforced
+
+version: "1.1"
+framework: "NIST SP 800-218"
+
+# Project metadata for evidence generation
+project:
+  name: "alex-ai-stuff"
+  description: "Personal AI development workspace"
+  organization: ""
+  contact: ""
+
+# Enable/disable practice groups
+practices:
+  # PO - Prepare the Organization
+  prepare_organization:
+    enabled: true
+    PO.1_security_requirements: true
+    PO.2_roles_responsibilities: true
+    PO.3_toolchains: true
+    PO.4_security_checks: true
+    PO.5_secure_environments: true
+
+  # PS - Protect the Software
+  protect_software:
+    enabled: true
+    PS.1_code_protection: true
+    PS.2_release_integrity: true
+    PS.3_archive_sbom: true
+
+  # PW - Produce Well-Secured Software
+  produce_well_secured:
+    enabled: true
+    PW.1_threat_modeling: true
+    PW.2_design_review: true
+    PW.4_third_party_components: true
+    PW.5_secure_coding: true
+    PW.6_compiler_security: true
+    PW.7_code_review: true
+    PW.8_security_testing: true
+    PW.9_secure_defaults: true
+
+  # RV - Respond to Vulnerabilities
+  respond_vulnerabilities:
+    enabled: true
+    RV.1_identify_vulnerabilities: true
+    RV.2_assess_remediate: true
+    RV.3_root_cause_analysis: true
+
+# Proactive enforcement settings
+enforcement:
+  # Trigger threat modeling prompt on new features
+  threat_model_on_new_feature: true
+  # Trigger secure coding checklist on code changes
+  secure_coding_on_changes: true
+  # Trigger security review reminder pre-commit
+  security_review_precommit: true
+  # Trigger dependency check on package changes
+  dependency_check_on_changes: true
+
+# Sub-agent dispatch configuration
+agents:
+  threat_modeling: "security-auditor"
+  dependency_analysis: "dependency-manager"
+  code_review: "code-reviewer"
+  security_audit: "security-auditor"
+  penetration_testing: "penetration-tester"
+  vulnerability_analysis: "error-detective"
+  root_cause: "debugger"
+  documentation: "technical-writer"
+
+# Evidence generation settings
+evidence:
+  output_dir: ".claude/ssdf/evidence"
+  formats:
+    - markdown
+  structured_export: false  # Enable for JSON/YAML audit exports
+  include_timestamps: true
+  include_ssdf_references: true
+
+# Integration with Beads issue tracking
+beads:
+  enabled: true
+  security_issue_type: "security"
+  vulnerability_prefix: "VULN"
+  link_evidence_to_issues: true
+
+# Secure coding standards (customize per language)
+secure_coding:
+  validate_inputs: true
+  encode_outputs: true
+  avoid_unsafe_functions: true
+  error_handling: true
+  logging_requirements: true
+  languages:
+    python:
+      - "Use parameterized queries for database access"
+      - "Validate and sanitize all user inputs"
+      - "Use secrets module for cryptographic operations"
+    javascript:
+      - "Use Content-Security-Policy headers"
+      - "Sanitize HTML to prevent XSS"
+      - "Use parameterized queries or ORM"
+    go:
+      - "Check all error returns"
+      - "Use crypto/rand for random numbers"
+      - "Validate input bounds"
