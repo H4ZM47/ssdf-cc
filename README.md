@@ -30,19 +30,48 @@ This plugin has commands for each area.
 
 ## Installation
 
-In Claude Code, run:
+### Prerequisites
 
-```
-/plugin install ssdf@H4ZM47
+Before installing the plugin, ensure you have:
+
+1. **Claude Code** - The official CLI for Claude. See [claude.ai/code](https://claude.ai/code) for installation.
+
+### Option 1: From GitHub (Recommended)
+
+Within Claude Code, execute these plugin commands:
+
+```bash
+/plugin marketplace add H4ZM47/ssdf-cc
+/plugin install ssdf-cc
 ```
 
-That's it. All the commands are available immediately.
+### Option 2: Local Development
+
+For developers working on the plugin locally:
+
+```bash
+git clone https://github.com/H4ZM47/ssdf-cc
+cd ssdf-cc
+/plugin marketplace add .
+/plugin install ssdf-cc
+```
+
+### Final Step
+
+After installation completes, restart Claude Code to activate all SSDF commands.
 
 ### Optional: Beads Integration
 
 This plugin works well with [Beads](https://github.com/steveyegge/beads), an AI-supervised issue tracker. When Beads is installed, security findings can be tracked as issues through their full lifecycle—from discovery to remediation to verification.
 
 Without Beads, the plugin still works fine. Findings go to evidence files instead of being tracked as issues.
+
+To install Beads:
+
+```bash
+/plugin marketplace add steveyegge/beads
+/plugin install beads
+```
 
 ### Optional: Project Configuration
 
