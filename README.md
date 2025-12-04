@@ -44,11 +44,6 @@ This plugin works well with [Beads](https://github.com/steveyegge/beads), an AI-
 
 Without Beads, the plugin still works fine. Findings go to evidence files instead of being tracked as issues.
 
-To install Beads:
-```
-/plugin install beads@beads-marketplace
-```
-
 ### Optional: Project Configuration
 
 If you want to customize which practices are enabled or set severity thresholds, copy the config template to your project:
