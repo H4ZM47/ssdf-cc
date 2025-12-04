@@ -30,35 +30,35 @@ This plugin has commands for each area.
 
 ## Installation
 
-### From the Plugin Manager
-
-Run `/plugin` in Claude Code and search for `ssdf`, or install directly:
+In Claude Code, run:
 
 ```
 /plugin install ssdf@H4ZM47
 ```
 
-### From Source
+That's it. All the commands are available immediately.
+
+### Optional: Beads Integration
+
+This plugin works well with [Beads](https://github.com/steveyegge/beads), an AI-supervised issue tracker. When Beads is installed, security findings can be tracked as issues through their full lifecycle—from discovery to remediation to verification.
+
+Without Beads, the plugin still works fine. Findings go to evidence files instead of being tracked as issues.
+
+To install Beads:
+```
+/plugin install beads@beads-marketplace
+```
+
+### Optional: Project Configuration
+
+If you want to customize which practices are enabled or set severity thresholds, copy the config template to your project:
 
 ```bash
-git clone https://github.com/H4ZM47/ssdf-cc.git
-cd ssdf-cc
-```
-
-Then in Claude Code:
-```
-/plugin install /path/to/ssdf-cc
-```
-
-### Project Configuration (Optional)
-
-Copy the config template to your project if you want to customize settings:
-
-```bash
+# After cloning the plugin repo
 cp -r ssdf-config-template /path/to/your/project/.claude/ssdf
 ```
 
-Edit `.claude/ssdf/ssdf-config.yaml` to configure which practices to enable and set thresholds.
+Then edit `.claude/ssdf/ssdf-config.yaml`.
 
 ## Commands
 
@@ -161,23 +161,6 @@ Shows where you stand against SSDF practices.
 - The evidence files are useful for security conversations with stakeholders—concrete findings beat vague assurances
 - If you keep finding the same types of bugs, `/ssdf-vuln-patterns` can help figure out why
 
-## Plugin Structure
-
-```
-ssdf-cc/
-├── .claude-plugin/
-│   └── plugin.json          # Plugin manifest
-├── commands/                # Slash commands
-│   └── ssdf-*.md
-├── skills/                  # Agent skills
-│   └── ssdf-*/
-│       └── SKILL.md
-└── ssdf-config-template/    # Project config template
-    ├── ssdf-config.yaml
-    ├── evidence/
-    └── templates/
-```
-
 ## References
 
 - [NIST SP 800-218 (SSDF)](https://csrc.nist.gov/publications/detail/sp/800-218/final)
@@ -186,6 +169,7 @@ ssdf-cc/
 - [OWASP](https://owasp.org/)
 - [CERT Secure Coding](https://wiki.sei.cmu.edu/confluence/display/seccode)
 - [CWE](https://cwe.mitre.org/)
+- [Beads Issue Tracker](https://github.com/steveyegge/beads)
 
 ## License
 
