@@ -1,0 +1,15 @@
+{
+  "name": "ssdf-marketplace",
+  "description": "Marketplace for SSDF compliance plugin",
+  "owner": {
+    "name": "ssdf-cc contributors"
+  },
+  "plugins": [
+    {
+      "name": "ssdf-cc",
+      "source": "./",
+      "description": "NIST SP 800-218 Secure Software Development Framework compliance tooling",
+      "version": "1.0.0"
+    }
+  ]
+}
