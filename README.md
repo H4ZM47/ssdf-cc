@@ -1,209 +1,224 @@
-# ssdf-cc
+# SSDF for Claude Code
 
-Claude Code plugin for NIST SP 800-218 Secure Software Development Framework (SSDF) v1.1 compliance.
+A Claude Code plugin that helps you build secure software and demonstrate compliance with industry security standards.
 
-## Features
+## What Problem Does This Solve?
 
-- **Comprehensive SSDF Coverage**: 15 automation commands covering all 4 SSDF practice groups
-- **Dual-mode Operation**: Proactive security enforcement during development + on-demand guidance via slash commands
-- **Sub-agent Integration**: Leverages specialized agents (security-auditor, code-reviewer, dependency-manager, etc.) for security analysis
-- **Evidence Generation**: Creates audit-ready documentation for compliance verification
-- **EO14028 Compliance**: Supports Executive Order 14028 requirements including SBOM and supply chain security
-- **Beads Integration**: Tracks security issues through the issue lifecycle
+Building secure software is hard. Proving you built it securely is even harder.
+
+Organizations face increasing pressure to demonstrate their software development practices meet security standards—whether from government contracts requiring NIST compliance, enterprise customers demanding security attestations, or internal security teams enforcing policies.
+
+**This plugin helps you:**
+- Catch security issues early, when they're cheapest to fix
+- Generate audit-ready evidence without manual documentation
+- Follow security best practices with AI-guided assistance
+- Meet compliance requirements (NIST SSDF, EO14028) systematically
+
+## Who Is This For?
+
+**Development teams** who want to improve their security posture without slowing down delivery.
+
+**Security engineers** who need to scale security reviews across multiple projects and teams.
+
+**Compliance officers** who need evidence that security practices are actually being followed.
+
+**Government contractors** required to meet NIST SP 800-218 (SSDF) or Executive Order 14028 requirements.
+
+**Any organization** that wants to shift security left and build it into their development workflow.
+
+## What Is NIST SSDF?
+
+The **Secure Software Development Framework (SSDF)** is a set of practices published by the National Institute of Standards and Technology (NIST) that describes what organizations should do to reduce vulnerabilities in their software. It's organized into four groups:
+
+| Group | Focus | Example Activities |
+|-------|-------|-------------------|
+| **Prepare the Organization** | Get your house in order | Define security policies, train developers, secure your tools |
+| **Protect the Software** | Guard your code and artifacts | Sign commits, generate SBOMs, verify dependencies |
+| **Produce Well-Secured Software** | Build security in | Threat modeling, code review, secure defaults |
+| **Respond to Vulnerabilities** | Handle issues effectively | Triage vulnerabilities, analyze root causes, track patterns |
+
+This plugin automates and assists with practices across all four groups.
 
 ## Installation
 
-1. Copy skills to your Claude Code config:
-   ```bash
-   cp -r .claude/skills/ssdf-*.md ~/.claude/skills/
-   ```
+### Quick Install
 
-2. Copy slash commands:
-   ```bash
-   cp -r .claude/commands/ssdf-*.md ~/.claude/commands/
-   ```
+```bash
+# Clone the repository
+git clone https://github.com/your-org/ssdf-cc.git
+cd ssdf-cc
 
-3. Copy project configuration to your target project:
-   ```bash
-   cp -r .claude/ssdf /path/to/your/project/.claude/
-   ```
+# Copy skills and commands to your Claude Code config
+cp -r .claude/skills/ssdf-*.md ~/.claude/skills/
+cp -r .claude/commands/ssdf-*.md ~/.claude/commands/
 
-4. Edit `.claude/ssdf/ssdf-config.yaml` to customize settings for your project.
+# Copy project configuration to your target project
+cp -r .claude/ssdf /path/to/your/project/.claude/
+```
 
-## Slash Commands
+### Configuration
 
-### Phase 1: Quick Wins (Low Effort, High Impact)
+Edit `.claude/ssdf/ssdf-config.yaml` in your project to customize:
+- Which practices to enable
+- Severity thresholds for findings
+- Evidence output preferences
+- Team-specific settings
 
-| Command | Description | SSDF Practice |
-|---------|-------------|---------------|
-| `/ssdf-integrity-check [scope]` | Verify commit signing, branch protection, release integrity | PS.1, PS.2 |
-| `/ssdf-sbom-generate [format]` | Generate SBOM in SPDX/CycloneDX formats | PS.3.2, EO14028 |
-| `/ssdf-secure-defaults [framework]` | Validate configuration against secure baselines | PW.9 |
-| `/ssdf-build-hardening [language]` | Analyze compiler flags and build security | PW.6 |
+## Available Commands
 
-### Phase 2: Core Automation (Medium Effort)
+Use these slash commands in Claude Code to perform security activities. Each command generates evidence documentation automatically.
 
-| Command | Description | SSDF Practice |
-|---------|-------------|---------------|
-| `/ssdf-toolchain-audit [scope]` | Audit compilers, package managers, IDE plugins | PO.3 |
-| `/ssdf-coding-standards [scope]` | Validate against OWASP, CERT, CWE guidelines | PW.5 |
-| `/ssdf-metrics [period]` | Generate security metrics and compliance dashboard | PO.4 |
-| `/ssdf-vuln-patterns [period]` | Analyze vulnerability patterns and root causes | RV.3 |
+### Security Reviews & Analysis
 
-### Phase 3: Advanced Features (High Effort)
+| Command | What It Does | When to Use |
+|---------|--------------|-------------|
+| `/ssdf-security-review [files]` | Performs a security-focused code review looking for vulnerabilities, injection flaws, authentication issues, and more | Before merging PRs, after major changes, or as part of regular security audits |
+| `/ssdf-threat-model [feature]` | Creates a threat model identifying assets, threats, and mitigations using STRIDE methodology | When designing new features, before architecture decisions, or reviewing existing systems |
+| `/ssdf-architecture-review [scope]` | Analyzes system architecture for trust boundaries, attack surface, and security patterns | During design reviews, before major releases, or when onboarding to a new codebase |
 
-| Command | Description | SSDF Practice |
-|---------|-------------|---------------|
-| `/ssdf-env-audit [environment]` | Audit environment security and access controls | PO.5 |
-| `/ssdf-architecture-review [scope]` | Review architecture for trust boundaries, attack surface | PW.2 |
-| `/ssdf-continuous-monitoring [action]` | Configure git hooks, CI/CD integration | All |
-| `/ssdf-policy-as-code [action]` | Define and validate security policies declaratively | PO.1 |
+### Dependency & Supply Chain Security
 
-### Phase 4: AI-Powered Features
+| Command | What It Does | When to Use |
+|---------|--------------|-------------|
+| `/ssdf-dependency-check [package]` | Checks dependencies for known vulnerabilities, outdated versions, and license issues | Before adding new dependencies, during regular maintenance, or after security advisories |
+| `/ssdf-sbom-generate [format]` | Generates a Software Bill of Materials in SPDX or CycloneDX format | For releases, customer requests, government contracts, or supply chain audits |
+| `/ssdf-slsa-provenance [action]` | Creates SLSA supply chain attestations proving how artifacts were built | For release pipelines, when customers require provenance, or to achieve SLSA levels |
 
-| Command | Description | SSDF Practice |
-|---------|-------------|---------------|
-| `/ssdf-threat-model-evolution [action]` | Track threat model changes over time | PW.1 |
-| `/ssdf-training-gaps [team]` | Identify security training needs from patterns | PO.2 |
-| `/ssdf-slsa-provenance [action]` | Generate SLSA supply chain attestations | PS.3, EO14028 |
+### Code Quality & Standards
 
-### Original Commands
+| Command | What It Does | When to Use |
+|---------|--------------|-------------|
+| `/ssdf-coding-standards [scope]` | Validates code against OWASP, CERT, and CWE secure coding guidelines | During code reviews, for new team members, or establishing baseline compliance |
+| `/ssdf-secure-defaults [framework]` | Checks that security configurations use safe defaults (HTTPS, secure cookies, etc.) | When setting up new projects, reviewing configurations, or after framework upgrades |
+| `/ssdf-build-hardening [language]` | Analyzes build configuration for security flags and compiler protections | When setting up CI/CD, reviewing build scripts, or hardening release builds |
 
-| Command | Description | SSDF Practice |
-|---------|-------------|---------------|
-| `/ssdf-threat-model [feature]` | Generate threat model for a feature | PW.1 |
-| `/ssdf-security-review [scope]` | Security-focused code review | PW.7, PW.8 |
-| `/ssdf-dependency-check [pkg]` | Check dependencies for vulnerabilities | PW.4, PS.3 |
-| `/ssdf-vuln-assess [description]` | Assess and respond to a vulnerability | RV.1-3 |
-| `/ssdf-evidence-export [format]` | Export compliance evidence | All |
-| `/ssdf-compliance-report [scope]` | Generate compliance status report | All |
+### Infrastructure & Environment
 
-## SSDF Practice Coverage
+| Command | What It Does | When to Use |
+|---------|--------------|-------------|
+| `/ssdf-integrity-check [scope]` | Verifies commit signing, branch protection rules, and release integrity | Before releases, during security audits, or setting up new repositories |
+| `/ssdf-toolchain-audit [scope]` | Audits development tools (compilers, package managers, IDE plugins) for security | Periodically, after tool updates, or when establishing secure development environments |
+| `/ssdf-env-audit [environment]` | Reviews environment security including access controls, secrets management, and network segmentation | When provisioning environments, during compliance audits, or after incidents |
 
-### PO - Prepare the Organization
-| Practice | Commands |
-|----------|----------|
-| PO.1 | policy-as-code |
-| PO.2 | training-gaps |
-| PO.3 | toolchain-audit |
-| PO.4 | metrics |
-| PO.5 | env-audit |
+### Vulnerability Management
 
-### PS - Protect the Software
-| Practice | Commands |
-|----------|----------|
-| PS.1 | integrity-check |
-| PS.2 | integrity-check |
-| PS.3 | sbom-generate, slsa-provenance, dependency-check |
+| Command | What It Does | When to Use |
+|---------|--------------|-------------|
+| `/ssdf-vuln-assess [description]` | Assesses a specific vulnerability with severity rating, impact analysis, and remediation guidance | When vulnerabilities are reported, triaging security findings, or incident response |
+| `/ssdf-vuln-patterns [period]` | Analyzes historical vulnerabilities to identify patterns and systemic issues | Quarterly reviews, after multiple incidents, or when planning security improvements |
 
-### PW - Produce Well-Secured Software
-| Practice | Commands |
-|----------|----------|
-| PW.1 | threat-model, threat-model-evolution |
-| PW.2 | architecture-review |
-| PW.4 | dependency-check |
-| PW.5 | coding-standards |
-| PW.6 | build-hardening |
-| PW.7/8 | security-review |
-| PW.9 | secure-defaults |
+### Compliance & Reporting
 
-### RV - Respond to Vulnerabilities
-| Practice | Commands |
-|----------|----------|
-| RV.1-3 | vuln-assess, vuln-patterns |
+| Command | What It Does | When to Use |
+|---------|--------------|-------------|
+| `/ssdf-compliance-report [scope]` | Generates a comprehensive compliance status report against SSDF practices | For audits, management reviews, or customer security questionnaires |
+| `/ssdf-evidence-export [format]` | Exports all collected evidence in a structured format for auditors | Before audits, for compliance submissions, or archiving |
+| `/ssdf-metrics [period]` | Generates security metrics dashboard showing trends and compliance scores | For executive reporting, team retrospectives, or continuous improvement |
 
-## Evidence Output
+### Policy & Governance
 
-All security activities generate evidence files in `.claude/ssdf/evidence/` organized by type:
+| Command | What It Does | When to Use |
+|---------|--------------|-------------|
+| `/ssdf-policy-as-code [action]` | Defines and validates security policies as code, enabling automated enforcement | When establishing governance, automating compliance checks, or managing exceptions |
+| `/ssdf-continuous-monitoring [action]` | Configures git hooks and CI/CD integration for ongoing security checks | When setting up new projects, improving DevSecOps maturity, or automating gates |
+
+### Team Development
+
+| Command | What It Does | When to Use |
+|---------|--------------|-------------|
+| `/ssdf-training-gaps [team]` | Analyzes vulnerability patterns to identify security training needs | For training planning, after incidents, or when onboarding teams |
+| `/ssdf-threat-model-evolution [action]` | Tracks how threat models change over time as the system evolves | When updating threat models, reviewing security posture, or during architecture changes |
+
+## How It Works
+
+When you run a command, the plugin:
+
+1. **Dispatches specialized AI agents** - Different security tasks require different expertise. A code review uses a code-reviewer agent, while a dependency check uses a dependency-manager agent.
+
+2. **Analyzes your code and configuration** - The agents examine relevant files, configurations, and patterns in your codebase.
+
+3. **Generates findings** - Issues are identified with severity levels, locations, and remediation guidance.
+
+4. **Creates evidence documentation** - Every activity generates a timestamped evidence file in `.claude/ssdf/evidence/` that can be used for audits.
+
+## Evidence & Audit Trail
+
+All security activities automatically generate evidence files organized by type:
 
 ```
 .claude/ssdf/evidence/
-├── security-reviews/      # PW.7, PW.8
-├── threat-models/         # PW.1
-├── dependencies/          # PW.4, PS.3
-├── integrity/             # PS.1, PS.2
-├── config/                # PW.9
-├── build/                 # PW.6
-├── toolchain/             # PO.3
-├── coding-standards/      # PW.5
-├── sbom/                  # PS.3.2
-├── environment/           # PO.5
-├── architecture/          # PW.2
-├── monitoring/            # All
-├── policy/                # PO.1
-├── threat-evolution/      # PW.1
-├── training/              # PO.2
-├── provenance/            # PS.3
-├── metrics/               # PO.4
-└── vuln-patterns/         # RV.3
+├── security-reviews/     # Code review findings
+├── threat-models/        # Threat modeling artifacts
+├── dependencies/         # Dependency analysis results
+├── sbom/                 # Software Bills of Materials
+├── architecture/         # Architecture review findings
+└── ...                   # Other evidence types
 ```
 
 Each evidence file includes:
-- Timestamps and SSDF practice references
-- Agent analysis results
-- Findings with severity, location, and remediation
-- Sign-off checklists
+- **Timestamp** - When the activity was performed
+- **Scope** - What was analyzed
+- **Findings** - Issues discovered with severity and remediation
+- **Sign-off checklist** - Verification that required steps were completed
 
-## Sub-Agent Dispatch
+This creates a continuous audit trail that demonstrates your security practices to auditors, customers, and stakeholders.
 
-| SSDF Activity | Primary Agent | Secondary Agent |
-|---------------|---------------|-----------------|
-| Integrity Check | security-auditor | git-workflow-manager |
-| SBOM Generation | dependency-manager | security-auditor |
-| Secure Defaults | security-auditor | framework-specific |
-| Build Hardening | build-engineer | security-engineer |
-| Toolchain Audit | devops-engineer | security-auditor |
-| Coding Standards | code-reviewer | security-auditor |
-| Metrics | data-analyst | security-auditor |
-| Vuln Patterns | error-detective | security-auditor |
-| Env Audit | platform-engineer | security-engineer |
-| Architecture Review | microservices-architect | security-auditor |
-| Continuous Monitoring | devops-engineer | security-engineer |
-| Policy as Code | compliance-auditor | security-auditor |
-| Threat Evolution | security-auditor | research-analyst |
-| Training Gaps | data-analyst | security-auditor |
-| SLSA Provenance | devops-engineer | security-engineer |
+## Getting Started
 
-## Configuration
-
-The `.claude/ssdf/ssdf-config.yaml` file controls:
-
-- Which SSDF practices are enabled
-- Proactive enforcement triggers
-- Sub-agent mappings for security tasks
-- Evidence output settings
-- Beads integration preferences
-- Compliance thresholds
-
-## Commit Message Format
+### 1. Run Your First Security Review
 
 ```
-[SSDF:PW.x.x] Brief description
-
-- Detail 1
-- Evidence: .claude/ssdf/evidence/[type]/YYYY-MM-DD-[context].md
+/ssdf-security-review src/
 ```
 
-## Issue Tracking
+This analyzes your source code for common vulnerabilities and generates a findings report.
 
-Uses **Beads** for issue tracking:
+### 2. Check Your Dependencies
 
-```bash
-bd list                    # View all issues
-bd create "Title"          # Create new issue
-bd show <issue-id>         # View issue details
-bd update <id> --status in_progress  # Update status
-bd sync                    # Sync with git remote
+```
+/ssdf-dependency-check
 ```
 
-Security issues use type `security`.
+This scans your dependency files (package.json, requirements.txt, etc.) for known vulnerabilities.
 
-## References
+### 3. Generate a Compliance Report
 
-- [NIST SP 800-218 SSDF v1.1](https://csrc.nist.gov/publications/detail/sp/800-218/final)
-- [Executive Order 14028](https://www.whitehouse.gov/briefing-room/presidential-actions/2021/05/12/executive-order-on-improving-the-nations-cybersecurity/)
-- [SLSA Framework](https://slsa.dev/)
-- [OWASP](https://owasp.org/)
+```
+/ssdf-compliance-report
+```
+
+This shows your current compliance status against SSDF practices and identifies gaps.
+
+### 4. Create a Threat Model
+
+```
+/ssdf-threat-model "user authentication flow"
+```
+
+This walks you through threat modeling for a specific feature or component.
+
+## Best Practices
+
+**Start with security reviews** - Run `/ssdf-security-review` on your most critical code paths first.
+
+**Integrate into your workflow** - Use `/ssdf-continuous-monitoring setup` to add security checks to your git hooks and CI/CD.
+
+**Review regularly, not just once** - Security is ongoing. Run commands periodically, not just at release time.
+
+**Use evidence for conversations** - The generated evidence helps communicate security status to stakeholders in concrete terms.
+
+**Address patterns, not just bugs** - Use `/ssdf-vuln-patterns` to find systemic issues rather than playing whack-a-mole with individual vulnerabilities.
+
+## Related Standards & Frameworks
+
+This plugin helps you align with:
+
+- **[NIST SP 800-218 (SSDF)](https://csrc.nist.gov/publications/detail/sp/800-218/final)** - The Secure Software Development Framework
+- **[Executive Order 14028](https://www.whitehouse.gov/briefing-room/presidential-actions/2021/05/12/executive-order-on-improving-the-nations-cybersecurity/)** - Improving the Nation's Cybersecurity
+- **[SLSA](https://slsa.dev/)** - Supply-chain Levels for Software Artifacts
+- **[OWASP](https://owasp.org/)** - Open Web Application Security Project guidelines
+- **[CERT Secure Coding](https://wiki.sei.cmu.edu/confluence/display/seccode)** - SEI CERT Coding Standards
+- **[CWE](https://cwe.mitre.org/)** - Common Weakness Enumeration
 
 ## License
 
