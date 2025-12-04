@@ -1,0 +1,20 @@
+{
+  "name": "ssdf",
+  "version": "1.0.0",
+  "description": "NIST SP 800-218 Secure Software Development Framework compliance tooling",
+  "author": {
+    "name": "ssdf-cc contributors"
+  },
+  "repository": "https://github.com/H4ZM47/ssdf-cc",
+  "license": "MIT",
+  "keywords": [
+    "security",
+    "compliance",
+    "nist",
+    "ssdf",
+    "sbom",
+    "slsa",
+    "threat-modeling",
+    "code-review"
+  ]
+}

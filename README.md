@@ -30,20 +30,35 @@ This plugin has commands for each area.
 
 ## Installation
 
-```bash
-# Clone it
-git clone https://github.com/your-org/ssdf-cc.git
-cd ssdf-cc
+### From the Plugin Manager
 
-# Copy to your Claude Code config
-cp -r .claude/skills/ssdf-*.md ~/.claude/skills/
-cp -r .claude/commands/ssdf-*.md ~/.claude/commands/
+Run `/plugin` in Claude Code and search for `ssdf`, or install directly:
 
-# Copy project config to your target project
-cp -r .claude/ssdf /path/to/your/project/.claude/
+```
+/plugin install ssdf@H4ZM47
 ```
 
-Then edit `.claude/ssdf/ssdf-config.yaml` for your project.
+### From Source
+
+```bash
+git clone https://github.com/H4ZM47/ssdf-cc.git
+cd ssdf-cc
+```
+
+Then in Claude Code:
+```
+/plugin install /path/to/ssdf-cc
+```
+
+### Project Configuration (Optional)
+
+Copy the config template to your project if you want to customize settings:
+
+```bash
+cp -r ssdf-config-template /path/to/your/project/.claude/ssdf
+```
+
+Edit `.claude/ssdf/ssdf-config.yaml` to configure which practices to enable and set thresholds.
 
 ## Commands
 
@@ -142,9 +157,26 @@ Shows where you stand against SSDF practices.
 
 - Start with `/ssdf-security-review` on your most important code
 - Set up `/ssdf-continuous-monitoring` early so checks run automatically
-- Run scans regularly, not just before releases
+- Run scans regularly
 - The evidence files are useful for security conversations with stakeholders—concrete findings beat vague assurances
 - If you keep finding the same types of bugs, `/ssdf-vuln-patterns` can help figure out why
+
+## Plugin Structure
+
+```
+ssdf-cc/
+├── .claude-plugin/
+│   └── plugin.json          # Plugin manifest
+├── commands/                # Slash commands
+│   └── ssdf-*.md
+├── skills/                  # Agent skills
+│   └── ssdf-*/
+│       └── SKILL.md
+└── ssdf-config-template/    # Project config template
+    ├── ssdf-config.yaml
+    ├── evidence/
+    └── templates/
+```
 
 ## References
 
